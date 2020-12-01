@@ -63,16 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMapSnippet(View view) {
-        if (!validateSnippetCords()) {
-            Toast.makeText(getApplicationContext(), "Coords are not filled properly", Toast.LENGTH_LONG).show();
-            return;
-        }
-        disableButtons();
-        GetMapFragmentRequest mapFragmentRequest = new GetMapFragmentRequest();
-        mapFragmentRequest.setPixelTopLeftCorner(new Point(x0ValueField.getText().toString(), y0ValueField.getText().toString()));
-        mapFragmentRequest.setPixelBottomRightCorner(new Point(x1ValueField.getText().toString(), y1ValueField.getText().toString()));
-        MapDownloader mapDownloader = new MapDownloader(this);
-        mapDownloader.execute(mapFragmentRequest);
+        if (validateSnippetCords())
+            callForMapSnippet();
+        else
+            Toast.makeText(getApplicationContext(), "Coordinates are not filled properly", Toast.LENGTH_SHORT).show();
     }
 
     private boolean validateSnippetCords() {
@@ -81,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validateCoord(EditText field) {
-        return !field.getText().toString().isEmpty() && !field.getText().toString().contains("-");
+        return !field.getText().toString().isEmpty() && !field.getText().toString().contains("-")
+                && Long.parseLong(field.getText().toString()) >= 0
+                && Long.parseLong(field.getText().toString()) <= 1000;
+    }
+
+    private void callForMapSnippet() {
+        disableButtons();
+        GetMapFragmentRequest mapFragmentRequest = new GetMapFragmentRequest();
+        mapFragmentRequest.setPixelTopLeftCorner(new Point(x0ValueField.getText().toString(), y0ValueField.getText().toString()));
+        mapFragmentRequest.setPixelBottomRightCorner(new Point(x1ValueField.getText().toString(), y1ValueField.getText().toString()));
+        MapDownloader mapDownloader = new MapDownloader(this);
+        mapDownloader.execute(mapFragmentRequest);
     }
 }
