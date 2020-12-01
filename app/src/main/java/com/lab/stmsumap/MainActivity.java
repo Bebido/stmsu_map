@@ -26,10 +26,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOriginalMap(View view) {
-        //do nothing for now
+        GetMapFragmentRequest fr = new GetMapFragmentRequest();
+        fr.setPixelTopLeftCorner(new Point("0", "0"));
+        fr.setPixelBottomRightCorner(new Point("10", "10"));
+        MapDownloader mapDownloader = new MapDownloader(this);
+        mapDownloader.execute(fr);
     }
 
     public void showMapSnippet(View view) {
-        //do nothing for now
+//        MapDownloader mapDownloader = new MapDownloader(this);
+//        imageView.setImageBitmap(mapDownloader.getMapSnippet(10, 10));
     }
 }
