@@ -3,6 +3,7 @@ package com.lab.stmsumap;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.NetworkOnMainThreadException;
 import android.util.Base64;
 
@@ -19,10 +20,10 @@ import java.io.IOException;
 public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String> {
 
     private MainActivity callingActivity;
-    private static final String NAMESPACE = "http://stm.pg.edu.pl/mapWS";
-    private static final String URL = "http://10.0.2.2:8080/ws/";
     private static final String METHOD_NAME = "getMapFragmentRequest";
-    private static final String SOAP_ACTION = "http://10.0.2.2:8080/ws";
+    private static final String NAMESPACE = "http://stm.pg.edu.pl/mapWS";
+    private static final String SOAP_ACTION = "";
+    private static final String URL = "http://10.0.2.2:8080/ws/";
 
     SoapSerializationEnvelope envelope;
     SoapObject request;
@@ -42,11 +43,10 @@ public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String
         String result = "";
 
         HttpTransportSE ht = new HttpTransportSE(URL);
-        ht.debug = true;
         try {
             ht.call(SOAP_ACTION, envelope);
             result = envelope.getResponse().toString();
-        } catch (IOException | XmlPullParserException | NetworkOnMainThreadException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -74,12 +74,24 @@ public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String
         }
     }
 
-
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        byte[] decodedString = Base64.decode(s, Base64.DEFAULT);
+        byte[] decodedString = new byte[0];
+        if (!s.isEmpty())
+            decodedString = Base64.decode(s, Base64.DEFAULT);
+
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        callingActivity.imageView.setImageBitmap(decodedByte);
+        callingActivity.getImageView().setImageBitmap(decodedByte);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                callingActivity.getButtonOriginalMap().setEnabled(true);
+                callingActivity.getButtonMapSnippet().setEnabled(true);
+            }
+        }, 500);
+
     }
 }

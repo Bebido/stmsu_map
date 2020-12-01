@@ -8,9 +8,21 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    Button buttonOriginalMap;
-    Button buttonMapSnippet;
+    private ImageView imageView;
+    private Button buttonOriginalMap;
+    private Button buttonMapSnippet;
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public Button getButtonOriginalMap() {
+        return buttonOriginalMap;
+    }
+
+    public Button getButtonMapSnippet() {
+        return buttonMapSnippet;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +38,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showOriginalMap(View view) {
-        GetMapFragmentRequest fr = new GetMapFragmentRequest();
-        fr.setPixelTopLeftCorner(new Point("0", "0"));
-        fr.setPixelBottomRightCorner(new Point("10", "10"));
+        disableButtons();
+
+        GetMapFragmentRequest mapFragmentRequest = new GetMapFragmentRequest();
         MapDownloader mapDownloader = new MapDownloader(this);
-        mapDownloader.execute(fr);
+        mapDownloader.execute(mapFragmentRequest);
+    }
+
+    private void disableButtons() {
+        buttonOriginalMap.setEnabled(false);
+        buttonMapSnippet.setEnabled(false);
     }
 
     public void showMapSnippet(View view) {
-//        MapDownloader mapDownloader = new MapDownloader(this);
-//        imageView.setImageBitmap(mapDownloader.getMapSnippet(10, 10));
+        disableButtons();
+        GetMapFragmentRequest mapFragmentRequest = new GetMapFragmentRequest();
+        mapFragmentRequest.setPixelTopLeftCorner(new Point("0", "0"));
+        mapFragmentRequest.setPixelBottomRightCorner(new Point("100", "100"));
+        MapDownloader mapDownloader = new MapDownloader(this);
+        mapDownloader.execute(mapFragmentRequest);
     }
 }

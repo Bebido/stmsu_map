@@ -8,6 +8,8 @@ import java.util.Hashtable;
 public class GetMapFragmentRequest implements KvmSerializable {
 
     public GetMapFragmentRequest() {
+        pixelTopLeftCorner = new Point("0", "0");
+        pixelBottomRightCorner = new Point("1000", "1000");
     }
 
     public GetMapFragmentRequest(Point pixelTopLeftCorner, Point pixelBottomRightCorner, Point geoTopLeftCorner, Point geoBottomRightCorner) {
