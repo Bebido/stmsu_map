@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.util.Base64;
+import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -72,12 +73,16 @@ public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        byte[] decodedString = new byte[0];
-        if (!s.isEmpty())
-            decodedString = Base64.decode(s, Base64.DEFAULT);
+        try {
+            if (s.isEmpty())
+                throw new IllegalArgumentException();
 
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        callingActivity.getImageView().setImageBitmap(decodedByte);
+            byte[] decodedString = Base64.decode(s, Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            callingActivity.getImageView().setImageBitmap(decodedByte);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(callingActivity.getApplicationContext(), "Error while SOAP call", Toast.LENGTH_LONG).show();
+        }
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
