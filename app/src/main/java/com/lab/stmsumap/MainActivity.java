@@ -4,13 +4,19 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private Button buttonOriginalMap;
     private Button buttonMapSnippet;
+    private EditText x0ValueField;
+    private EditText x1ValueField;
+    private EditText y0ValueField;
+    private EditText y1ValueField;
 
     public ImageView getImageView() {
         return imageView;
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         return buttonMapSnippet;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +42,12 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         buttonOriginalMap = findViewById(R.id.buttonOriginalMap);
         buttonMapSnippet = findViewById(R.id.buttonMapSnippet);
+        x0ValueField = findViewById(R.id.x0Value);
+        x1ValueField = findViewById(R.id.x1Value);
+        y0ValueField = findViewById(R.id.y0Value);
+        y1ValueField = findViewById(R.id.y1Value);
     }
+
 
     public void showOriginalMap(View view) {
         disableButtons();
@@ -51,11 +63,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMapSnippet(View view) {
+        if (!validateSnippetCords()) {
+            Toast.makeText(getApplicationContext(), "Coords are not filled properly", Toast.LENGTH_LONG).show();
+            return;
+        }
         disableButtons();
         GetMapFragmentRequest mapFragmentRequest = new GetMapFragmentRequest();
-        mapFragmentRequest.setPixelTopLeftCorner(new Point("0", "0"));
-        mapFragmentRequest.setPixelBottomRightCorner(new Point("100", "100"));
+        mapFragmentRequest.setPixelTopLeftCorner(new Point(x0ValueField.getText().toString(), y0ValueField.getText().toString()));
+        mapFragmentRequest.setPixelBottomRightCorner(new Point(x1ValueField.getText().toString(), y1ValueField.getText().toString()));
         MapDownloader mapDownloader = new MapDownloader(this);
         mapDownloader.execute(mapFragmentRequest);
+    }
+
+    private boolean validateSnippetCords() {
+        return validateCoord(x0ValueField) && validateCoord(y0ValueField)
+                && validateCoord(x1ValueField) && validateCoord(y1ValueField);
+    }
+
+    private boolean validateCoord(EditText field) {
+        return !field.getText().toString().isEmpty() && !field.getText().toString().contains("-");
     }
 }

@@ -4,18 +4,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.NetworkOnMainThreadException;
 import android.util.Base64;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 
 public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String> {
 
@@ -25,8 +20,8 @@ public class MapDownloader extends AsyncTask<GetMapFragmentRequest, Long, String
     private static final String SOAP_ACTION = "";
     private static final String URL = "http://10.0.2.2:8080/ws/";
 
-    SoapSerializationEnvelope envelope;
-    SoapObject request;
+    private SoapSerializationEnvelope envelope;
+    private SoapObject request;
 
     @Override
     protected String doInBackground(GetMapFragmentRequest... requests) {

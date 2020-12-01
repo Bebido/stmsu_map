@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="1000px"
+        android:layout_height="1000px"
+        android:layout_marginTop="10dp"
         android:contentDescription="Map view"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,11 +25,11 @@
         android:id="@+id/buttonOriginalMap"
         android:layout_width="420dp"
         android:layout_height="45dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="188dp"
         android:onClick="showOriginalMap"
         android:text="Show Original Map"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:ignore="HardcodedText" />
@@ -43,10 +43,97 @@
         android:text="Show Map Snippet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonOriginalMap"
-        app:layout_constraintVertical_bias="0.21"
+        app:layout_constraintVertical_bias="0.282"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="126dp"
+        android:layout_height="29dp"
+        android:text="Coords for snippet:"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonOriginalMap"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.082"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:id="@+id/x0Value"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="55dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/y0Value"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/x1Value"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="110dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/y1Value"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textViewX0"
+        android:layout_width="25dp"
+        android:layout_height="45dp"
+        android:text="X0"
+        app:layout_constraintBottom_toBottomOf="@+id/x0Value"
+        app:layout_constraintEnd_toStartOf="@+id/x0Value" />
+
+    <TextView
+        android:id="@+id/textViewX1"
+        android:layout_width="25dp"
+        android:layout_height="45dp"
+        android:text="X1"
+        app:layout_constraintBottom_toBottomOf="@+id/x1Value"
+        app:layout_constraintEnd_toStartOf="@+id/x1Value" />
+
+    <TextView
+        android:id="@+id/textViewY0"
+        android:layout_width="25dp"
+        android:layout_height="45dp"
+        android:text="Y0"
+        app:layout_constraintBottom_toBottomOf="@+id/y0Value"
+        app:layout_constraintEnd_toStartOf="@+id/y0Value" />
+
+    <TextView
+        android:id="@+id/textViewY1"
+        android:layout_width="25dp"
+        android:layout_height="45dp"
+        android:text="Y1"
+        app:layout_constraintBottom_toBottomOf="@+id/y1Value"
+        app:layout_constraintEnd_toStartOf="@+id/y1Value" />
 
 </android.support.constraint.ConstraintLayout>
